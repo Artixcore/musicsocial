@@ -7,6 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    @yield('meta')
+
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
@@ -20,6 +22,65 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <style>
+
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(255, 255, 255);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #000000;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #111010;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 15px;
+  cursor: pointer;
+  background-color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
 
     a{
         font-size: 16px;
@@ -73,11 +134,11 @@
     @yield('style_css')
 </head>
 <body>
-    <div id="app">
+    <div id="main">
         <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white sha">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}" style="font-size: 28px;">
-                    {{ config('app.name', 'Laravel') }}
+                <button class="openbtn" onclick="openNav()">Manu <i class="fas fa-align-justify"></i></button>  <a class="navbar-brand" href="{{ url('/') }}" style="font-size: 28px;">
+                   {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -88,7 +149,7 @@
                     <ul class="navbar-nav mr-auto">
                         @if (Auth::user())
                         <li class="nav-item">
-                            <a class="nav-link btn btn-outline-success" style="color: #000000;" href="{{url('edit')}}/{{Auth::user()->name}}">Create Band</a>
+                            <a class="nav-link btn btn-outline-success" style="color: #000000;" href="{{url('band')}}">Bands</a>
                         </li>
                         <li class="nav-item">
                             <a class="btn btn-outline-success nav-link" style="color: #000000;" href="#" data-toggle="modal" data-target="#createpost">Create New Post</a>
@@ -106,7 +167,7 @@
                         @if (Auth::user())
                         <li class="nav-item">
                             <div class="dropdown">
-                                <a class="nav-link dropbtn" style="color: #000000;"><i class="fas fa-envelope 3x"></i><span class="badge badge-light">4</span></a>
+                                <a class="nav-link dropbtn" style="color: #000000;"><i class="fas fa-envelope fa-lg"></i><span class="badge badge-light">4</span><i class="fas fa-caret-down"></i></a>
                                 <div class="dropdown-content">
                                   <a href="#">Link 1</a>
                                   <a href="#">Link 2</a>
@@ -117,7 +178,7 @@
 
                         <li class="nav-item">
                             <div class="dropdown">
-                                <a class="nav-link dropbtn" style="color: #000000;"><i class="nav-icon fas fa-bell 2x"></i><span class="badge badge-light">4</span></a>
+                                <a class="nav-link dropbtn" style="color: #000000;"><i class="nav-icon fas fa-bell fa-lg"></i><span class="badge badge-light">4</span><i class="fas fa-caret-down"></i></a>
                                 <div class="dropdown-content">
                                   <a href="#">Link 1</a>
                                   <a href="#">Link 2</a>
@@ -135,7 +196,7 @@
                             <li class="nav-item">
                                 <div class="dropdown">
                                 <a class="nav-link dropbtn" style="color: #000000;">
-                                    <i class="fas fa-user"></i>   <i class="fas fa-caret-down"></i>
+                                    <i class="fas fa-user fa-lg"></i>  <i class="fas fa-caret-down"></i>
                                 </a>
                                 {{-- dropbtn --}}
                                 <div class="dropdown-content">
@@ -172,7 +233,13 @@
                 </div>
             </div>
         </nav>
-
+        <div id="mySidebar" class="sidebar mt-5 py-5">
+            <a href="javascript:void(0)" class="closebtn mt-5 py-5" onclick="closeNav()"><i class="far fa-times-circle 3X"></i></a>
+            <a href="#">About</a>
+            <a href="#">Services</a>
+            <a href="#">Clients</a>
+            <a href="#">Contact</a>
+        </div>
         <main class="py-5">
             <div class="container py-4">
             @yield('content')
@@ -213,6 +280,19 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @yield('footer_js')
+
+
+<script>
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft= "0";
+    }
+    </script>
 
 </body>
 </html>

@@ -8,13 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     use Likeable;
-    protected $table = 'posts';
-
-    protected $hidden = [
-        'id', 'user_id',
-    ];
 
     function users(){
-        return $this->belongsTo(User::class, );
+        return $this->belongsTo(User::class);
     }
 }

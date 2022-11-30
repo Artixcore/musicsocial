@@ -19,7 +19,6 @@
              <th scope="col">Name</th>
              <th scope="col">First ame</th>
              <th scope="col">Last Name</th>
-             <th scope="col">Blood Group</th>
             <th scope="col">Role</th>
             <th scope="col">email</th>
             <th scope="col">Status</th>
@@ -33,7 +32,6 @@
         <td> {{$item->name}} </td>
         <td> {{$item->f_name}} </td>
         <td> {{$item->l_name}} </td>
-        <td> {{$item->bloodgroup}} </td>
         <td> {{implode(',', $item->roles()->get()->pluck('urole')->toArray()) }} </td>
         <td> {{$item->email}}</td>
         <td><input type="checkbox" class="toggle-class" data-id="{{ $item->id }}" data-toggle="toggle" data-on="Enabled" data-off="Disabled" {{ $item->status==true ? 'checked' : '' }}></td>

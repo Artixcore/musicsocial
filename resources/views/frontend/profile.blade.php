@@ -1,14 +1,18 @@
 @extends('layouts.app')
 
+@section('meta')
+
+<meta name="description" content="All Bands are here.">
+<meta name="keywords" content="Music | Social Networking">
+<meta name="author" content="Ismam Tabriz">
+
+@endsection
+
 @section('style_css')
-{{-- <style>
-    a{
-        font-size: 20px;
-    }
-a:hover{
-    font-size:25px;
-}
-</style> --}}
+<style>
+
+
+</style>
 @endsection
 
 @section('content')
@@ -18,7 +22,7 @@ a:hover{
     <div class="row">
       <div class="col-3">
           <div class="card sha">
-            <img id="image_preview_container" src="{{ asset('user') }}/{{ $users->avatar }}" alt="preview image" style="height: 250px; width:100%;">
+            <img id="image_preview_container" src="{{ asset('user') }}/{{ $users->avatar }}" alt="preview image" style="height: 200px; width:100%;">
                 <ul class="list-group">
                     <li class="list-group-item">
                         <form method="POST" enctype="multipart/form-data" id="upload_image_form" action="javascript:void(0)" >
@@ -52,9 +56,13 @@ a:hover{
                         </div>
                     </li>
                 @endif
-                    <li class="list-group-item">{{ $users->name }}</li>
-                    <li class="list-group-item">{{ $users->email }}</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+                    <li class="list-group-item"><h5> Follower <span class="badge badge-secondary">New</span></h5></li>
+                    <li class="list-group-item"><h5><a href="{{url('about')}}/{{ Auth::user()->name }}"> About </a><span class="badge badge-secondary">New</span></h5></li>
+                    <li class="list-group-item"><h5> Professional <span class="badge badge-secondary">New</span></h5></li>
+                    <li class="list-group-item"><h5> Studied <span class="badge badge-secondary">New</span></h5></li>
+                    <li class="list-group-item"><h5> Work <span class="badge badge-secondary">New</span></h5></li>
+                    <li class="list-group-item"><h5> Marital Status <span class="badge badge-secondary">New</span></h5></li>
+                    <li class="list-group-item"><h5> Live In <span class="badge badge-secondary">New</span></h5></li>
                   </ul>
               {{-- </div> --}}
           </div>

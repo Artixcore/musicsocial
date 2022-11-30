@@ -106,7 +106,7 @@ class UserController extends Controller
             Auth::logout();
             return redirect(route('login'))->with('successMsg', 'Password has been changed successfully');
         }else {
-            return back()->with('errorMsg', 'Current Password is invalid'); 
+            return back()->with('errorMsg', 'Current Password is invalid');
         }
     }
 
